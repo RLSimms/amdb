@@ -8,8 +8,8 @@
 <p>
   <b>Votes (<%= @user.votes.count %>):</b>
   <ul>
-  <% @user.movies.each do |movie|  %>
-    <li><%= link_to movie.title, movie %></li>
+  <% @user.votes.each do |vote|  %>
+    <li><%= link_to vote.movie.title, vote.movie %> <%= link_to "Delete Vote", vote, :method => 'delete' %></li>
   <% end %>
   </ul>
 </p>
