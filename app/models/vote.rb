@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   belongs_to :movie
 
   def user_cannot_vote_more_than_three_times
-    if self.user.votes.count >= 3
+    if self.user && self.user.votes.count >= 3
       self.errors.add(:user_id, "has already voted three times")
     end
   end
