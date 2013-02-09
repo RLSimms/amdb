@@ -21,7 +21,7 @@
     <td><%= movie.votes.count %></td>
     <td>
       <%= form_for Vote.new(:movie_id => movie.id) do |f| %>
-        <%= f.collection_select :user_id, User.all, :id, :username %>
+        <%= f.collection_select :user_id, User.order("created_at DESC"), :id, :username %>
         <%= f.hidden_field :movie_id %>
         <%= f.submit %>
       <% end %>
