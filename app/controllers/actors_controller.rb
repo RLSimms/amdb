@@ -1,4 +1,9 @@
 class ActorsController < ApplicationController
+  def autocomplete
+    @actors = Actor.order(:name).where("name like ?", "%#{params[:term]}%")
+    render json: @actors.map(&:name)
+  end
+
   # GET /actors
   # GET /actors.json
   def index

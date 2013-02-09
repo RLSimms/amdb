@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b>Votes (<%= @user.votes.count %>):</b>
+  <ul>
+  <% @user.movies.each do |movie|  %>
+    <li><%= link_to movie.title, movie %></li>
+  <% end %>
+  </ul>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

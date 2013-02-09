@@ -1,13 +1,18 @@
 class Movie < ActiveRecord::Base
-  attr_accessible :director_id, :title, :year
+  attr_accessible :director_id, :title, :year, :director_name
 
-  validates_presence_of :director_id, :title
+  validates_presence_of :title
 
-  def director
-    return Director.find_by_id(self.director_id)
+  belongs_to :director
+  has_many :roles, :dependent => :destroy
+  has_many :votes, :dependent => :destroy
+  has_many :users, :through => :votes
+
+  def director_name
+    director.try(:name)
   end
 
-  def roles
-    return Role.where(:movie_id => self.id)
+  def director_name=(name)
+    self.director = Director.find_or_create_by_name(name) if name.present?
   end
 end

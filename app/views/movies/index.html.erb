@@ -5,19 +5,27 @@
     <th>Title</th>
     <th>Director</th>
     <th>Year</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Votes</th>
+    <th>Add A Vote</th>
   </tr>
 
 <% @movies.each do |movie| %>
   <tr>
-    <td><%= movie.title %></td>
-    <td><%= link_to movie.director.name, movie.director %></td>
+    <td><%= link_to movie.title, movie %></td>
+    <td>
+      <% if movie.director.present? %>
+        <%= link_to movie.director.name, movie.director %>
+      <% end %>
+    </td>
     <td><%= movie.year %></td>
-    <td><%= link_to 'Show', movie %></td>
-    <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-    <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= movie.votes.count %></td>
+    <td>
+      <%= form_for Vote.new(:movie_id => movie.id) do |f| %>
+        <%= f.collection_select :user_id, User.all, :id, :username %>
+        <%= f.hidden_field :movie_id %>
+        <%= f.submit %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
