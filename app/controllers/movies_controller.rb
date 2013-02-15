@@ -1,15 +1,9 @@
 class MoviesController < ApplicationController
-  def autocomplete
-    @movies = Movie.order(:title).where("title like ?", "%#{params[:term]}%")
-    render json: @movies.map(&:title)
-  end
-
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
-    @movies = @movies.sort { |a, b| b.votes.count <=> a.votes.count }
-
+    @movies = Movie.order('title asc').limit(500)
+    @vote = Vote.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @movies }
@@ -20,6 +14,8 @@ class MoviesController < ApplicationController
   # GET /movies/1.json
   def show
     @movie = Movie.find(params[:id])
+    @vote = Vote.new
+    @vote.movie_id = @movie.id
 
     respond_to do |format|
       format.html # show.html.erb

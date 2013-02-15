@@ -1,15 +1,36 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @movie.title %>
-</p>
+<h1><%= @movie.title %></h1>
+
+<%= form_for(@vote) do |f| %>
+  <% if @vote.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vote.errors.count, "error") %> prohibited this vote from being saved:</h2>
+
+      <ul>
+      <% @vote.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.collection_select :user_id, User.all, :id, :username %>
+  </div>
+  <%= f.hidden_field :movie_id, :value => @movie.id %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
 
 <p>
   <b>Director:</b>
-  <% if @movie.director.present? %>
-    <%= link_to @movie.director.name, @movie.director %>
-  <% end %>
+  <%= link_to @movie.director.name, @movie.director %>
 </p>
 
 <p>
@@ -26,16 +47,29 @@
   </ul>
 </p>
 
-<p>
-  <b>Votes (<%= @movie.votes.count %>):</b>
-  <ul>
-  <% @movie.users.each do |user|  %>
-    <li><%= link_to user.username, user %></li>
-  <% end %>
-  </ul>
-</p>
+<p>Number of votes: <%= @movie.votes.count %></p>
 
-<%= link_to 'Back', movies_path %> |
+<ul>
+  <% @movie.users.each do |user| %>
+    <li><%= user.username %></li>
+  <% end %>
+</ul>
+
 <%= link_to 'Edit', edit_movie_path(@movie) %> |
-<%= link_to 'Destroy', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', movies_path %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

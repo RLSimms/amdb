@@ -1,14 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>User:</b>
-  <%= @vote.user.username %>
+  <b>Movie:</b>
+  <%= @vote.movie_id %>
 </p>
 
 <p>
-  <b>Movie:</b>
-  <%= @vote.movie.title %>
+  <b>User:</b>
+  <%= @vote.user_id %>
 </p>
+
 
 <%= link_to 'Edit', edit_vote_path(@vote) %> |
 <%= link_to 'Back', votes_path %>

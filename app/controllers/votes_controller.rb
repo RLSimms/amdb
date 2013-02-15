@@ -76,7 +76,7 @@ class VotesController < ApplicationController
     @vote.destroy
 
     respond_to do |format|
-      format.html { redirect_to @vote.user }
+      format.html { redirect_to votes_url }
       format.json { head :no_content }
     end
   end

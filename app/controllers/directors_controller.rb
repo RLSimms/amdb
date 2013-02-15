@@ -1,9 +1,4 @@
 class DirectorsController < ApplicationController
-  def autocomplete
-    @directors = Director.order(:name).where("name like ?", "%#{params[:term]}%")
-    render json: @directors.map(&:name)
-  end
-
   # GET /directors
   # GET /directors.json
   def index

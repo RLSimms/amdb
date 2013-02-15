@@ -5,14 +5,12 @@
   <%= @user.username %>
 </p>
 
-<p>
-  <b>Votes (<%= @user.votes.count %>):</b>
-  <ul>
-  <% @user.votes.each do |vote|  %>
-    <li><%= link_to vote.movie.title, vote.movie %> <%= link_to "Delete Vote", vote, :method => 'delete' %></li>
+My favorite movies:
+<ul>
+  <% @user.movies.each do |movie| %>
+    <li><%= movie.title %></li>
   <% end %>
-  </ul>
-</p>
+</ul>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

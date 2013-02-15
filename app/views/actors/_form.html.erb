@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :dob %><br />
-    <%= f.date_select :dob, :start_year => Time.now.year, :end_year => 1886 %>
+    <%= f.date_select :dob, :start_year => Time.now.year, :end_year => Time.now.year - 100 %>
   </div>
   <div class="actions">
     <%= f.submit %>

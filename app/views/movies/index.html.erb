@@ -1,35 +1,35 @@
-<h1>Listing movies</h1>
+<div class="page-header">
+  <h1>Nominees  </h1>
+  <%= link_to 'Nominate Something', new_movie_path, :class => "btn btn-success" %>
+</div>
 
-<table>
+
+
+<table class="table table-striped table-hover">
   <tr>
     <th>Title</th>
     <th>Director</th>
     <th>Year</th>
     <th>Votes</th>
-    <th>Add A Vote</th>
+    <th></th>
   </tr>
 
 <% @movies.each do |movie| %>
   <tr>
     <td><%= link_to movie.title, movie %></td>
-    <td>
-      <% if movie.director.present? %>
-        <%= link_to movie.director.name, movie.director %>
-      <% end %>
-    </td>
+    <td><%= link_to movie.director.name, movie.director %></td>
     <td><%= movie.year %></td>
-    <td><%= movie.votes.count %></td>
+    <td><%= movie.votes.count %>
     <td>
-      <%= form_for Vote.new(:movie_id => movie.id) do |f| %>
-        <%= f.collection_select :user_id, User.order("created_at DESC"), :id, :username %>
-        <%= f.hidden_field :movie_id %>
-        <%= f.submit %>
+      <% if session[:user_id].present? %>
+        <%= form_for @vote, :html => { :class => "form-inline" } do |f| %>
+          <%= f.hidden_field :user_id, :value => session[:user_id] %>
+          <%= f.hidden_field :movie_id, :value => movie.id %>
+          <%= f.submit "Upvote", :class => "btn btn-primary" %>
+        <% end %>
       <% end %>
     </td>
   </tr>
+
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Movie', new_movie_path %>
