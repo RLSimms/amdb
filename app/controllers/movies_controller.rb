@@ -2,8 +2,9 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.order('title asc').limit(500)
+    @movies = Movie.all.sort { |a, b| b.votes.count <=> a.votes.count }
     @vote = Vote.new
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @movies }
