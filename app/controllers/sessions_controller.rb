@@ -10,7 +10,8 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url
     else
-      redirect_to '/sessions/new', :notice => "Nice try!"
+      flash[:notice] = "Nice try!"
+      render 'new'
     end
   end
 
